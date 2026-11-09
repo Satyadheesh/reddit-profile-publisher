@@ -1,0 +1,47 @@
+name: Publish official Reddit profile update
+
+on:
+  schedule:
+    - cron: '30 12 * * *'
+  workflow_dispatch:
+    inputs:
+      publish:
+        description: 'Publish the due draft (otherwise validate only)'
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install -r requirements.txt
+      - name: Validate or publish
+        env:
+          REDDIT_CLIENT_ID: ${{ secrets.REDDIT_CLIENT_ID }}
+          REDDIT_CLIENT_SECRET: ${{ secrets.REDDIT_CLIENT_SECRET }}
+          REDDIT_USERNAME: ${{ secrets.REDDIT_USERNAME }}
+          REDDIT_PASSWORD: ${{ secrets.REDDIT_PASSWORD }}
+          REDDIT_PUBLISH_ENABLED: ${{ vars.REDDIT_PUBLISH_ENABLED }}
+          REQUESTED_PUBLISH: ${{ inputs.publish }}
+          EVENT_NAME: ${{ github.event_name }}
+        run: |
+          if [ "$REDDIT_PUBLISH_ENABLED" = "true" ] && { [ "$EVENT_NAME" = "schedule" ] || [ "$REQUESTED_PUBLISH" = "true" ]; }; then
+            python publisher.py --publish
+          else
+            python publisher.py --dry-run
+          fi
+      - name: Record published post
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add state/post_log.json
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m "chore: record Reddit profile post"
+          git push

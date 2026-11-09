@@ -1,0 +1,11 @@
+{
+  "drafts": [
+    {
+      "id": "how-satyadheesh-organises-public-information-v1",
+      "publish_on": "2026-11-10",
+      "title": "What SatyaDheesh is building",
+      "body": "SatyaDheesh is building a public-information system for India.\n\nToday, it processes Indian news into organised records, timelines, promise-tracker material, and UPSC/SSC study resources. The point is not to replace judgment: it is to make public context easier to find, compare and revisit.\n\nSome parts are live today. Other capabilities are still a stated direction, and we will label those clearly. Corrections and missing context are welcome.",
+      "claims": ["news-pipeline", "public-records", "study-material", "grounded-civic-agent"]
+    }
+  ]
+}

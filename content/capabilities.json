@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "capabilities": [
+    {
+      "id": "news-pipeline",
+      "status": "live",
+      "statement": "SatyaDheesh processes Indian news through a scheduled pipeline that rewrites, classifies and organises stories."
+    },
+    {
+      "id": "public-records",
+      "status": "live",
+      "statement": "SatyaDheesh publishes event timelines, leader records and promise-tracker material with linked source context."
+    },
+    {
+      "id": "study-material",
+      "status": "live",
+      "statement": "SatyaDheesh turns selected current affairs into UPSC and SSC study material, including notes, quizzes and reports."
+    },
+    {
+      "id": "bilingual-output",
+      "status": "live",
+      "statement": "SatyaDheesh provides English and Hindi output across supported information and study surfaces."
+    },
+    {
+      "id": "grounded-civic-agent",
+      "status": "vision",
+      "statement": "SatyaDheesh aims to become an evidence-grounded civic intelligence system that explains public developments with traceable context."
+    }
+  ]
+}
