@@ -29,10 +29,13 @@ jobs:
           REDDIT_USERNAME: ${{ secrets.REDDIT_USERNAME }}
           REDDIT_PASSWORD: ${{ secrets.REDDIT_PASSWORD }}
           REDDIT_PUBLISH_ENABLED: ${{ vars.REDDIT_PUBLISH_ENABLED }}
+          # Deliberately hard-paused until the Reddit access request is approved
+          # and an operator changes this to false in a reviewed commit.
+          REDDIT_PROFILE_POSTING_PAUSED: "true"
           REQUESTED_PUBLISH: ${{ inputs.publish }}
           EVENT_NAME: ${{ github.event_name }}
         run: |
-          if [ "$REDDIT_PUBLISH_ENABLED" = "true" ] && { [ "$EVENT_NAME" = "schedule" ] || [ "$REQUESTED_PUBLISH" = "true" ]; }; then
+          if [ "$REDDIT_PUBLISH_ENABLED" = "true" ] && [ "$REDDIT_PROFILE_POSTING_PAUSED" != "true" ] && { [ "$EVENT_NAME" = "schedule" ] || [ "$REQUESTED_PUBLISH" = "true" ]; }; then
             python publisher.py --publish
           else
             python publisher.py --dry-run
